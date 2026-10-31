@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Imperial Vision – design tokens (single source of truth)
+   --------------------------------------------------------------------------
+   Zdroj: IMPERIAL_VISION[design_manual].pdf (Branding manuál, 30 str.)
+          + dodané vizuály „Príklad vizuálu“ (priklad_01/02.png).
+   Pravidla s označením [MANUÁL] jsou převzata přímo z manuálu.
+   Hodnoty s označením [ODVOZENO] manuál číselně neuvádí – jsou změřené
+   z dodaných podkladů a po dodání oficiálních HEX/CMYK hodnot je stačí
+   přepsat ZDE. Žádná sekce webu tyto hodnoty nezapisuje natvrdo.
+   ========================================================================== */
+
+@font-face {
+  /* [MANUÁL 3.1] Primární písmo: Archivo (variabilní). Dodaný soubor
+     Archivo-VariableFont_wdth,wght.ttf – osa wdth zafixována na 100,
+     osa wght zachována 400–700, subset Latin + Latin Extended-A (čeština). */
+  font-family: "Archivo";
+  src: url("/assets/fonts/Archivo-Variable-latin-ext.woff") format("woff");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Barvy – základ identity ---------------------------------- */
+  /* [MANUÁL 2.x, 4.x] Identita stojí na černé, bílé a modulárním gradientu. */
+  --iv-black: #000000;
+  --iv-white: #ffffff;
+
+  /* [ODVOZENO z priklad_01/02.png] neutrální škála */
+  --iv-ink: #1e1e1e;            /* nadpisy na světlém pozadí */
+  --iv-paper: #fbfbfb;          /* světlé plochy (pozadí vizuálů) */
+  --iv-grey-500: #7e7e7e;       /* šedý text ve vizuálech – jen pro velké písmo */
+  --iv-grey-400: #b0b0b0;       /* obrysy štítků ve vizuálech */
+  --iv-grey-200: #ebebeb;
+  --iv-grey-100: #f3f3f3;
+  --iv-grey-800: #2a2a2a;
+  --iv-grey-900: #121212;
+
+  /* [ODVOZENO z priklad_02.png – červený štítek] akcent. Manuál neuvádí
+     samostatnou HEX hodnotu; odpovídá červené části gradientu. */
+  --iv-red: #e04f42;
+
+  /* [ODVOZENO z gradientu] doplňkový tyrkys – jen pro datové grafy */
+  --iv-cyan: #1e9dbd;
+
+  /* ---------- Barevné role (UI) – SVĚTLÝ MOTIV ------------------------ */
+  --color-bg: var(--iv-white);
+  --color-bg-muted: var(--iv-paper);
+  --color-bg-inverse: var(--iv-black);
+  --color-surface: var(--iv-white);
+  --color-surface-2: var(--iv-white);   /* vnořené plochy (formulář v kartě) */
+  --color-surface-inverse: var(--iv-grey-900);
+  /* [ZADÁNÍ KLIENTA] světlé bloky místo černých (výsledky, cookie lišta) */
+  --color-panel: #f2f2f2;
+  /* [ZADÁNÍ KLIENTA] sekundární plná tlačítka – bílý text má kontrast 9.4 : 1 */
+  --color-button: #494949;
+  --color-button-hover: #2f2f2f;
+  /* jemné ztmavení bloků při hoveru */
+  --color-card-hover: #f7f7f7;
+  --color-card-hover-border: #d6d6d6;
+  --color-text: var(--iv-ink);
+  --color-text-strong: var(--iv-black);
+  /* WCAG AA: #6b6b6b má na #fbfbfb kontrast 5.1:1 (#7e7e7e by bylo 3.9:1) */
+  --color-text-muted: #6b6b6b;
+  --color-text-inverse: var(--iv-white);
+  --color-text-inverse-muted: #a8a8a8; /* 8.6:1 na černé */
+  --color-placeholder: #8a8a8a;
+  --color-border: #dcdcdc;
+  --color-border-strong: var(--iv-grey-400);
+  --color-border-inverse: #333333;
+  --color-segmented: var(--iv-grey-100);
+  --color-segmented-on: var(--iv-white);
+  --color-accent: var(--iv-red);
+  --color-focus: #1e9dbd;
+
+  /* Stavové barvy [DOPLŇKOVÉ – mimo identitu, laděné do palety] */
+  --color-error: #b3261e;          /* 6.5:1 na bílé */
+  --color-error-bg: #fbeceb;
+  --color-error-border: #efc3c0;
+  --color-warning: #8a5300;        /* 6.0:1 na bílé */
+  --color-warning-bg: #fdf3e2;
+  --color-warning-border: #ecd3a8;
+  --color-success: #1d6b46;        /* 6.6:1 na bílé */
+  --color-success-bg: #e8f4ee;
+  --color-success-border: #bcdcca;
+  --color-info-bg: #eef6f9;
+  --color-info-border: #cfe3ea;
+
+  /* ---------- Gradientové video [DODÁNO KLIENTEM: gradeintweb.mp4] ------- */
+  --iv-video-still: url("/assets/video/gradient-last.webp");   /* závěrečná sekce */
+  --iv-hero-poster: url("/assets/video/hero-first.webp");
+  /* [ODVOZENO z videa] zelený přechod pro zvýraznění v hero */
+  --iv-accent-gradient: linear-gradient(100deg, #d4ffe9 0%, #7dffc0 40%, #2fe89a 100%);
+  --iv-green: #119f5b; /* štítky s čísly kroků (dle ukázky ukazka001, místo červené) */
+  /* tmavší varianta pro zvýraznění v nadpisech na bílém pozadí (kontrast ≥ 3 : 1 = AA pro velký text) */
+  --iv-accent-gradient-dark: linear-gradient(100deg, #0a6b3c 0%, #0f8f52 55%, #12a05c 100%);
+
+  /* ---------- Gradient Imperial Vision --------------------------------- */
+  /* [MANUÁL 2.1] Originální gradient – rastr extrahovaný přímo z PDF
+     manuálu (beze změny barev, orientace dle str. 12). */
+  --iv-gradient-image: url("/assets/brand/iv-gradient.webp");
+  /* [ODVOZENO] CSS náhrada vzorkovaná z originálu – jen pro tenké linky
+     a malé detaily, kde rastr nedává smysl. Nepoužívat na velké plochy. */
+  --iv-gradient-linear: linear-gradient(
+    100deg,
+    #0e96b6 0%,
+    #8dc6d7 18%,
+    #dad3d5 38%,
+    #d98a82 62%,
+    #b12b1d 84%,
+    #1d0502 100%
+  );
+  --iv-gradient: var(--iv-gradient-image) center / cover no-repeat, var(--iv-gradient-linear);
+
+  /* ---------- Typografie ----------------------------------------------- */
+  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* fluidní typová škála (mobile-first) */
+  --fs-display: clamp(3.25rem, 1.6rem + 6.6vw, 7.25rem);
+  --fs-hero-title: clamp(2.6rem, 1.3rem + 4.6vw, 5.25rem);
+  --fs-h2: clamp(2.125rem, 1.4rem + 3.2vw, 4rem);
+  --fs-h3: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.55vw, 1.5rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-xs: 0.8125rem;
+  --fs-figure: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+
+  /* [ODVOZENO z vizuálů] těsné proklady a mírně stažený tracking nadpisů */
+  --lh-tight: 1.02;
+  --lh-heading: 1.08;
+  --lh-body: 1.55;
+  --ls-display: -0.035em;
+  --ls-heading: -0.025em;
+  --ls-caps: 0.08em;
+
+  /* ---------- Zaoblení --------------------------------------------------- */
+  /* [ODVOZENO z geometrie symbolu] Rohy symbolu mají poloměr ≈ 2,2 % výšky
+     tahu (16 / 734 jednotek ve vektoru). Systém proto drží malé, „řezané“
+     poloměry. Žádné pill tvary. Hodnoty odpovídají i štítkům ve vizuálech
+     (≈ 4 px na 1080 px) a ploše gradientu v manuálu. */
+  --radius-xs: 3px;   /* checkbox, drobné štítky */
+  --radius-sm: 5px;   /* tlačítka, inputy, štítky */
+  --radius-md: 8px;   /* karty, panely */
+  --radius-lg: 12px;  /* velké plochy, gradientové panely */
+
+  /* ---------- Rozestupy (4px grid) ------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-pad: clamp(4rem, 2.5rem + 6vw, 8.5rem);
+
+  /* ---------- Layout --------------------------------------------------- */
+  --container: 1240px;
+  --container-narrow: 820px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --header-h: 72px;
+
+  /* ---------- Ohraničení a stíny -------------------------------------- */
+  --border-w: 1px;
+  --border: var(--border-w) solid var(--color-border);
+  --shadow-none: none;
+  /* Identita pracuje s plochou a kontrastem – stín jen pro plovoucí vrstvy */
+  --shadow-float: 0 12px 40px -12px rgb(0 0 0 / 0.28);
+
+  /* ---------- Tlačítka ------------------------------------------------- */
+  --btn-h: 52px;
+  --btn-h-sm: 42px;
+  --btn-pad-x: 1.375rem;
+  --btn-radius: var(--radius-sm);
+  --btn-fw: var(--fw-semibold);
+
+  /* ---------- Formulářová pole ---------------------------------------- */
+  --field-h: 52px;
+  --field-radius: var(--radius-sm);
+  --field-bg: var(--iv-white);
+  --field-bg-hover: #fcfcfc;
+  --field-border: #c7c7c7;          /* 1.6:1 – doplněno výraznou focus linkou */
+  --field-border-hover: #8f8f8f;
+  --field-border-focus: var(--iv-black);
+
+  /* ---------- Pohyb ---------------------------------------------------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 480ms;
+  --marquee-duration: 40s;
+  /* odsazení gradientu v hero od okrajů okna */
+  --hero-inset: clamp(8px, 0.5rem + 0.4vw, 14px);
+
+  /* ---------- Vrstvy --------------------------------------------------- */
+  --z-header: 50;
+  --z-banner: 80;
+  --z-dialog: 100;
+
+  /* ---------- Symbol jako identifikační prvek ------------------------- */
+  /* [MANUÁL 4.5] samostatný symbol jako podkladová vrstva: 10–20 % opacity */
+  --symbol-watermark-opacity: 0.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}
