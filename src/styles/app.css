@@ -137,8 +137,8 @@ strong { font-weight: var(--fw-semibold); }
 }
 .header.is-solid { color: var(--iv-black); }
 .header.is-solid .header__bar {
-  background: var(--iv-white); border-color: var(--color-border);
-  box-shadow: 0 8px 24px -16px rgb(0 0 0 / 0.25);
+  background: var(--iv-white);
+  box-shadow: 0 6px 24px -12px rgb(0 0 0 / 0.22); /* bez obrysu – od obsahu ho odděluje jen jemný stín */
 }
 .header .logo--on-light { display: none; }
 .header.is-solid .logo--on-dark { display: none; }
@@ -225,7 +225,7 @@ strong { font-weight: var(--fw-semibold); }
 }
 
 /* ---------- Partneři – marquee ------------------------------------------- */
-.partners { padding-block: var(--space-7); border-bottom: var(--border); background: var(--color-bg); }
+.partners { padding-block: var(--space-7); background: var(--color-bg); }
 .partners__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); margin-bottom: var(--space-6); }
 .partners__title { font-size: var(--fs-body); font-weight: var(--fw-semibold); letter-spacing: -0.005em; }
 
@@ -268,12 +268,10 @@ strong { font-weight: var(--fw-semibold); }
 }
 .explainer__watermark {
   position: absolute; pointer-events: none; z-index: 0;
-  height: 150%; width: auto; max-width: none; top: -18%; right: -14%;
+  height: 150%; width: auto; max-width: none; top: -18%; right: -31%; /* posun doprava o ~17 % šířky sekce */
 }
 .explainer > .container { position: relative; z-index: 1; }
-.explainer__grid { display: grid; gap: var(--space-6); align-items: end; margin-bottom: var(--space-8); }
-.explainer__text { font-size: var(--fs-h3); line-height: 1.3; color: var(--color-text-muted); font-weight: var(--fw-medium); letter-spacing: -0.01em; max-width: 30ch; }
-.explainer__text strong { color: var(--color-text-strong); font-weight: var(--fw-semibold); }
+.explainer__head { position: relative; }
 .steps { display: grid; gap: var(--space-4); counter-reset: s; }
 .steps__item {
   background: var(--color-surface); border: var(--border); border-radius: var(--radius-md);
@@ -289,7 +287,6 @@ strong { font-weight: var(--fw-semibold); }
 .steps__text { color: var(--color-text-muted); }
 .explainer__bridge { margin-top: var(--space-7); }
 @media (min-width: 900px) {
-  .explainer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
   .steps { grid-template-columns: repeat(3, 1fr); }
   .steps__item { padding: var(--space-6); min-height: 220px; align-content: start; }
 }
@@ -298,6 +295,7 @@ strong { font-weight: var(--fw-semibold); }
 .section-head { max-width: 760px; margin-bottom: var(--space-7); }
 .section-head .h2 { margin-bottom: var(--space-5); }
 .section-head__lead { font-size: 1.125rem; color: var(--color-text-muted); max-width: 60ch; }
+.section-head__lead strong { color: var(--color-text-strong); font-weight: var(--fw-semibold); }
 
 /* ---------- Kalkulačka ----------------------------------------------------- */
 .calc-section { padding-block: var(--section-pad); background: var(--color-bg); }
@@ -462,7 +460,7 @@ strong { font-weight: var(--fw-semibold); }
 @media (min-width: 1000px) { .results__body { padding: var(--space-6); } }
 
 /* ---------- Recenze -------------------------------------------------------- */
-.reviews { padding-block: var(--section-pad); background: var(--color-bg-muted); border-top: var(--border); }
+.reviews { padding-block: var(--section-pad); background: var(--color-bg-muted); }
 .reviews__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--space-5); margin-bottom: var(--space-6); }
 .reviews__head .h2 { max-width: 14ch; }
 .reviews__summary { display: flex; align-items: center; gap: var(--space-4); }
@@ -487,7 +485,7 @@ strong { font-weight: var(--fw-semibold); }
 .review__meta { margin-top: auto; }
 .reviews .link { display: inline-block; margin-top: var(--space-2); }
 .review--placeholder .review__text { color: var(--color-text-muted); }
-.review__meta { display: grid; gap: 2px; padding-top: var(--space-4); border-top: var(--border); }
+.review__meta { display: grid; gap: 2px; padding-top: var(--space-2); }
 .review__author { font-weight: var(--fw-semibold); }
 .review__date { font-size: var(--fs-xs); color: var(--color-text-muted); }
 .stars { display: inline-flex; gap: 2px; color: #cfcfcf; }

@@ -343,14 +343,14 @@ export function Explainer() {
       <div className="explainer__watermark-wrap" aria-hidden="true">
         <SymbolMark variant="white" className="explainer__watermark" />
       </div>
-      <div className="container explainer__grid">
-        <div data-reveal data-parallax="0.05" className="parallax--desktop">
+      <div className="container">
+        <div className="section-head explainer__head" data-reveal>
           <h2 id="explainer-title" className="h2">Možná platíte <span className="accent">víc, než musíte.</span></h2>
+          <p className="section-head__lead">
+            Podmínky vašeho úvěru <strong>nemusí být ty nejlepší.</strong> Zajímá vás snížení měsíční splátky
+            nebo snížení celkového přeplatku? Zjistěte, <strong>jestli a kolik můžete měsíčně ušetřit.</strong>
+          </p>
         </div>
-        <p className="explainer__text parallax--desktop" data-reveal data-reveal-delay="1" data-parallax="0.12">
-          Podmínky vašeho úvěru <strong>nemusí být ty nejlepší.</strong> Zajímá vás snížení měsíční splátky
-          nebo snížení celkového přeplatku? Zjistěte, <strong>jestli a kolik můžete měsíčně ušetřit.</strong>
-        </p>
       </div>
       <ol className="container steps">
         {STEPS.map((s, i) => (

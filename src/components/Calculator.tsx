@@ -33,14 +33,14 @@ const MAX_LOANS = 6;
  * Ilustrativní výchozí hodnoty – slouží jen k ukázce výpočtu.
  * Sazba při refinancování NENÍ nabídkou žádné banky.
  */
-const FIRST_LOAN: LoanState = { id: 1, balance: "3 000 000", rate: "5,89", payment: "", remY: "25", remM: "0" };
+const FIRST_LOAN: LoanState = { id: 1, balance: "800 000", rate: "5,89", payment: "", remY: "8", remM: "0" };
 const DEFAULT_NEW_RATE = "3,97";
 
 export function Calculator({ onSummaryChange, onRequestContact }: CalculatorProps) {
   const [loans, setLoans] = useState<LoanState[]>([FIRST_LOAN]);
   const [newRate, setNewRate] = useState(DEFAULT_NEW_RATE);
   const [sameTerm, setSameTerm] = useState(true);
-  const [newY, setNewY] = useState("25");
+  const [newY, setNewY] = useState("8");
   const [newM, setNewM] = useState("0");
   const nextId = useRef(2);
   const addBtnRef = useRef<HTMLButtonElement>(null);
