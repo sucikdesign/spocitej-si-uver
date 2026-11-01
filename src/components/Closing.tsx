@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { CoBrandLogo } from "./Brand";
+import { attachHoverPlayback, gradientVideoSources } from "../lib/hoverVideo";
 import { ContactForm } from "./ContactForm";
 import type { CalculationSummary } from "./Calculator";
 import { SITE } from "../config/site";
@@ -8,9 +10,43 @@ import { openCookieSettings } from "../lib/consent";
 /* Závěrečné CTA + kontaktní formulář                                       */
 /* ------------------------------------------------------------------------ */
 
+/**
+ * Gradientové video na pozadí závěrečné sekce – stejný soubor jako v hero.
+ * Ve výchozím stavu stojí na prvním snímku, přehrává se jen při najetí myší.
+ */
+function FinalVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [sources] = useState(gradientVideoSources);
+  useEffect(() => {
+    const video = ref.current;
+    const area = video?.closest<HTMLElement>(".final");
+    if (!video || !area) return;
+    return attachHoverPlayback(video, area).dispose;
+  }, []);
+  return (
+    <div className="final__media" aria-hidden="true">
+      <video
+        ref={ref}
+        className="final__video"
+        poster="/assets/video/hero-first.webp"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        tabIndex={-1}
+        disablePictureInPicture
+      >
+        <source src={sources.mp4} type="video/mp4" />
+        <source src={sources.webm} type="video/webm" />
+      </video>
+    </div>
+  );
+}
+
 export function FinalCta({ summary }: { summary: CalculationSummary | null }) {
   return (
     <section id="kontakt" className="final" aria-labelledby="final-title" tabIndex={-1}>
+      <FinalVideo />
       <div className="container">
         <div className="final__card" data-reveal>
           <div className="final__copy">

@@ -11,6 +11,7 @@ import {
   type Review,
 } from "../data/reviews";
 import { SITE } from "../config/site";
+import { attachHoverPlayback, gradientVideoSources } from "../lib/hoverVideo";
 
 export function scrollToId(id: string, focusSelector?: string) {
   const el = document.getElementById(id);
@@ -113,13 +114,13 @@ export function Header({ overlay }: { overlay: boolean }) {
 /* ------------------------------------------------------------------------ */
 
 /** Délka úvodu (video přes celou obrazovku), pak se zmenší do bloku. */
-const INTRO_MS = 1000;
+const INTRO_MS = 700;
 /** Pojistka: když se video nerozběhne (úsporný režim, chyba), obsah se ukáže i tak. */
 const INTRO_FAILSAFE_MS = 6000;
 
 /**
- * Gradientové video v hero (gradientwebHERO.mp4, 20 s, smyčka).
- *  1. Po načtení hraje přes celou obrazovku (≈ 1 s).
+ * Gradientové video v hero (GRADIENT_loop_10s.mp4, 10 s, smyčka).
+ *  1. Po načtení hraje přes celou obrazovku (0,7 s).
  *  2. Pak se `intro-playing` na <html> vymění za `intro-done`: video se plynule
  *     zmenší do zaobleného bloku, současně naběhne obsah hero i navigace a video
  *     se zastaví.
@@ -129,11 +130,7 @@ const INTRO_FAILSAFE_MS = 6000;
 function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
   // 1920 px pro desktop, 1280 px pro mobil/tablet; MP4 (H.264) + WebM (VP9)
-  const [sources] = useState(() =>
-    typeof window !== "undefined" && window.matchMedia("(min-width: 900px)").matches
-      ? { mp4: "/assets/video/hero-1920.mp4", webm: "/assets/video/hero-1920.webm" }
-      : { mp4: "/assets/video/hero-1280.mp4", webm: "/assets/video/hero-1280.webm" },
-  );
+  const [sources] = useState(gradientVideoSources);
 
   useEffect(() => {
     const video = ref.current;
@@ -142,52 +139,16 @@ function HeroVideo() {
     if (!video || !hero) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let done = false;
-    let hovering = false;
+    // přehrávání na hover – až po skončení úvodu; 12 px ≈ odsazení bloku (--hero-inset)
+    const hover = attachHoverPlayback(video, video.parentElement as HTMLElement, { margin: 12, enabled: () => done });
+    const removeHover = hover.dispose;
 
     const finish = () => {
       if (done) return;
       done = true;
       root.classList.remove("intro-playing");
       root.classList.add("intro-done");
-      if (!hovering) video.pause();
-    };
-    void reduced;
-
-    // Přehrávání na hover: poloha kurzoru se hlídá na celém okně, takže funguje
-    // i nad textem, tlačítky a navigací, která leží přes video, a i když kurzor
-    // stojí nad hero už při načtení stránky. Spouští se jen myší / trackpadem.
-    const media = video.parentElement as HTMLElement;
-    const update = () => {
-      if (!done) return;
-      if (hovering) {
-        if (video.paused) video.play().catch(() => {});
-      } else if (!video.paused) {
-        video.pause();
-      }
-    };
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType === "touch") return;
-      const r = media.getBoundingClientRect();
-      const m = 12; // odsazení viditelného bloku od okrajů (≈ --hero-inset)
-      hovering = e.clientX >= r.left + m && e.clientX <= r.right - m && e.clientY >= r.top + m && e.clientY <= r.bottom - m;
-      update();
-    };
-    const onOut = (e: PointerEvent) => {
-      // kurzor opustil okno prohlížeče
-      if (!e.relatedTarget) { hovering = false; update(); }
-    };
-    const onScrollHover = () => {
-      if (!hovering) return;
-      const r = media.getBoundingClientRect();
-      if (r.bottom < 0) { hovering = false; update(); }
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerout", onOut);
-    window.addEventListener("scroll", onScrollHover, { passive: true });
-    const removeHover = () => {
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerout", onOut);
-      window.removeEventListener("scroll", onScrollHover);
+      if (!hover.isHovering()) video.pause();
     };
 
     if (reduced) {

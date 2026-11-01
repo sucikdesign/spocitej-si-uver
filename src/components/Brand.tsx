@@ -8,7 +8,7 @@
 const LOGO_SRC = {
   white: "/assets/brand/imperial-vision-logo-horizontal-white.svg",
   black: "/assets/brand/imperial-vision-logo-horizontal-black.svg",
-  /** Dodaný soubor IMPERIALVISION_logoGRADIENT.png (stejné plátno 2925 × 1444 vč. ochranné zóny), zmenšený do WebP. */
+  /** Dodaný soubor UPRAVLOGO.png (stejné plátno 2925 × 1444 vč. ochranné zóny), zmenšený do WebP. */
   gradient: "/assets/brand/imperial-vision-logo-horizontal-gradient.webp",
 } as const;
 

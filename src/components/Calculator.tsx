@@ -9,7 +9,7 @@ import {
   type LoanField,
 } from "../lib/loanMath";
 import { formatCZK, formatPercent, parseNumber } from "../lib/format";
-import { tweenNumber } from "../lib/motion";
+import { prefersReducedMotion, tweenNumber } from "../lib/motion";
 
 export type CalculationSummary = Record<string, string>;
 
@@ -317,20 +317,20 @@ function Results({ result, many }: { result: ConsolidationResult | null; many: b
           <div className="results__kpi">
             <p className="results__kpi-label">{higher ? "Měsíčně více o" : "Měsíčně méně o"}</p>
             <p className={`results__kpi-value${higher ? " is-negative" : ""}`}>
-              <AnimatedCZK value={Math.abs(md)} />
+              <AnimatedCZK value={Math.abs(md)} offset={100} />
             </p>
           </div>
           <div className="results__kpi">
             <p className="results__kpi-label">{extra ? "Celkově zaplatíte více o" : "Celková úspora"}</p>
             <p className={`results__kpi-value${extra ? " is-negative" : ""}`}>
-              <AnimatedCZK value={Math.abs(td)} />
+              <AnimatedCZK value={Math.abs(td)} offset={1000} />
             </p>
           </div>
         </div>
 
         <dl className="results__list results__list--small">
-          <Row term={`Celkem zaplatím na ${many ? "aktuálních úvěrech" : "aktuálním úvěru"}`} value={formatCZK(result.currentTotalPaid)} />
-          <Row term={`Celkem zaplatím po ${label}`} value={formatCZK(result.newTotalPaid)} />
+          <Row term={`Celkem zaplatím na ${many ? "aktuálních úvěrech" : "aktuálním úvěru"}`} value={<AnimatedCZK value={result.currentTotalPaid} />} />
+          <Row term={`Celkem zaplatím po ${label}`} value={<AnimatedCZK value={result.newTotalPaid} />} />
         </dl>
 
         {result.notices.length > 0 && (
@@ -357,16 +357,76 @@ function Results({ result, many }: { result: ConsolidationResult | null; many: b
   );
 }
 
-/** Částka v Kč s plynulým dopočítáním při změně (count-up). */
-function AnimatedCZK({ value }: { value: number }) {
-  const [shown, setShown] = useState(value);
-  const prev = useRef(value);
+/** Odkud se počítá při prvním zobrazení (podíl výsledné hodnoty) – ne od nuly. */
+const COUNT_FROM = 0.6;
+
+/**
+ * Částka v Kč s mikro „counter“ animací:
+ *  – pokaždé, když se výsledek objeví na obrazovce, se číslo dopočítá na skutečnou hodnotu –
+ *    buď z hodnoty nižší o `offset` Kč (hlavní údaje: měsíčně o 100, celkem o 1 000),
+ *    nebo z ~60 % (ostatní řádky),
+ *  – při každé další změně vstupů plynule přejde na novou hodnotu.
+ * Při prefers-reduced-motion se zobrazuje rovnou výsledná hodnota.
+ */
+function AnimatedCZK({ value, offset }: { value: number; offset?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [isStatic] = useState(() => prefersReducedMotion() || typeof IntersectionObserver === "undefined");
+  const startOf = (v: number) => (offset !== undefined ? Math.max(0, v - offset) : Math.round(v * COUNT_FROM));
+  const [visible, setVisible] = useState(isStatic);
+  const [shown, setShown] = useState(() => (isStatic ? value : startOf(value)));
+  const current = useRef(shown);
+  const latest = useRef(value);
+  latest.current = value;
+  const justRevealed = useRef(false);
+
+  // Sledování viditelnosti: po každém návratu do zorného pole se číslo dopočítá
+  // znovu. Reset na výchozí hodnotu proběhne, až když číslo úplně zmizí z obrazovky.
   useEffect(() => {
-    const cancel = tweenNumber(prev.current, value, 520, setShown);
-    prev.current = value;
-    return cancel;
-  }, [value]);
-  return <>{formatCZK(shown)}</>;
+    if (isStatic || !ref.current) return;
+    let timer = 0;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.9) {
+          window.clearTimeout(timer);
+          // krátká pauza, aby si čtenář všiml, že se číslo „dopočítává“
+          timer = window.setTimeout(() => {
+            justRevealed.current = true;
+            setVisible(true);
+          }, offset !== undefined ? 250 : 0);
+        } else if (!entry.isIntersecting) {
+          window.clearTimeout(timer);
+          const start = startOf(latest.current);
+          current.current = start;
+          setShown(start);
+          setVisible(false);
+        }
+      },
+      { threshold: [0, 0.9] },
+    );
+    io.observe(ref.current);
+    return () => {
+      window.clearTimeout(timer);
+      io.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStatic, offset]);
+
+  useEffect(() => {
+    if (!visible) {
+      // mimo obrazovku jen připravíme výchozí hodnotu pro příští dopočítání
+      if (!isStatic) { current.current = startOf(value); setShown(current.current); }
+      return;
+    }
+    const duration = justRevealed.current ? (offset !== undefined ? 1600 : 1200) : 520;
+    justRevealed.current = false;
+    return tweenNumber(current.current, value, duration, (v) => {
+      current.current = v;
+      setShown(v);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, visible]);
+
+  return <span ref={ref} className="counter">{formatCZK(shown)}</span>;
 }
 
 function Row({ term, value, note }: { term: string; value: ReactNode; note?: string }) {

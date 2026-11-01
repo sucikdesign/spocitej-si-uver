@@ -12,7 +12,7 @@ Všechny hodnoty jsou centrálně v `src/styles/tokens.css`.
 | Úpravy loga | Zákaz měnit proporce symbolu a logotypu, rozdělovat, deformovat, otáčet. | 4.3 | Logo jen jako `<img>` z originálního souboru, výška řízená poměrem stran. |
 | Monochrom | Logo lze použít v libovolné jednobarevné variantě při dostatečném kontrastu. | 4.2 | Bílá varianta (originál) + černá varianta (změněna jen výplň `fill`). |
 | Gradient v logu | Povolen **výhradně** v centrální části symbolu („I“). | 4.1 | Na webu se gradient do loga nevkládá – logo je vždy monochromní. |
-| Barevnost | Modulární gradienty jako základ barevného systému. | 2.1 | Hero používá gradientové video `gradientwebHERO.mp4` (úvod přes celou obrazovku, dál přehrávání na hover), závěrečná sekce statický snímek z `gradeintweb.mp4` (rozhodnutí klienta; zelený tón se liší od gradientu z manuálu). Rastr `iv-gradient.webp` zůstává připraven. |
+| Barevnost | Modulární gradienty jako základ barevného systému. | 2.1 | Hero i závěrečná sekce používají gradientové video `GRADIENT_loop_10s.mp4` (hero: úvod 0,7 s přes celou obrazovku, pak blok; v obou sekcích přehrávání na hover; rozhodnutí klienta). Rastr `iv-gradient.webp` zůstává připraven. |
 | Fractal Glass | Rozšíření gradientu o skleněný efekt. | 2.2 | Na webu se záměrně nepoužívá – jen čistý gradient (rozhodnutí klienta). |
 | Typografie | Primární písmo Archivo (variabilní). | 3.1 | Dodaný variabilní font, subset pro češtinu, rezy 400–700. |
 | Symbol jako prvek | Samostatný symbol jako podkladová vrstva, doporučená opacita 10–20 %. | 4.5 | Vodoznak v sekci „Možná platíte…“. |
@@ -28,7 +28,7 @@ Všechny hodnoty jsou centrálně v `src/styles/tokens.css`.
 
 ## Světlý motiv
 
-Světlé sekce (`#fff` / `#fbfbfb`), tmavá patička. Hero: gradientové video ≈ 1 s přes celou obrazovku, pak se zmenší do odsazeného bloku s rádiusem 12 px; dál se přehrává jen při hoveru. Závěrečná sekce: statický poslední snímek videa, tmavé sklo (20 %) s bílým textem.
+Světlé sekce (`#fff` / `#fbfbfb`), tmavá patička. Hero: gradientové video 0,7 s přes celou obrazovku, pak se zmenší do odsazeného bloku s rádiusem 12 px; dál se přehrává jen při hoveru. Závěrečná sekce: stejné video, v klidu první snímek, při hoveru se přehrává; tmavé sklo (20 %) s bílým textem.
 
 ## Doplňkové UI barvy (mimo identitu)
 

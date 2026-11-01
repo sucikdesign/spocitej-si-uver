@@ -87,7 +87,7 @@
   --color-info-border: #cfe3ea;
 
   /* ---------- Gradientové video [DODÁNO KLIENTEM: gradeintweb.mp4] ------- */
-  --iv-video-still: url("/assets/video/gradient-last.webp");   /* závěrečná sekce */
+  --iv-video-still: url("/assets/video/hero-first.webp");   /* závěrečná sekce – první snímek videa */
   --iv-hero-poster: url("/assets/video/hero-first.webp");
   /* [ODVOZENO z videa] zelený přechod pro zvýraznění v hero */
   --iv-accent-gradient: linear-gradient(100deg, #d4ffe9 0%, #7dffc0 40%, #2fe89a 100%);

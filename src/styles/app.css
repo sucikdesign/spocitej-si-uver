@@ -413,6 +413,7 @@ strong { font-weight: var(--fw-semibold); }
   background: var(--color-panel); color: var(--color-text-strong);
   border-radius: var(--radius-lg); overflow: hidden;
 }
+.counter { font-variant-numeric: tabular-nums; }
 .results__body { padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-6); }
 .results__eyebrow { font-size: var(--fs-small); font-weight: var(--fw-semibold); color: var(--color-text-muted); }
 .results__placeholder { color: var(--color-text-muted); font-size: 1.125rem; }
@@ -500,10 +501,13 @@ strong { font-weight: var(--fw-semibold); }
 
 /* ---------- Závěrečné CTA ------------------------------------------------- */
 .final {
+  position: relative; overflow: hidden; isolation: isolate;
   padding-block: var(--section-pad);
-  /* statický snímek z gradientového videa – text leží na tmavém skle */
+  /* první snímek gradientového videa (než se video načte) – text leží na tmavém skle */
   background: var(--iv-video-still) center / cover no-repeat, #0b1f14;
 }
+.final__media { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.final__video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .final:focus { outline: none; }
 /* rozmazané tmavé „sklo“ (20 %) – drží kontrast bílého textu */
 .final__card {
@@ -635,13 +639,19 @@ strong { font-weight: var(--fw-semibold); }
 /* --- Hero: úvodní animace a parallax obsahu ------------------------------- */
 .hero__word { display: inline-block; }
 .hero__word + .hero__word { margin-left: 0.24em; }
-/* „úvěr.“ – zelený přechod laděný do videa, světlejší než pozadí, aby nesplýval */
+/* „úvěr.“ – bílý štítek se zaoblenými rohy (jako čísla kroků); písmena jsou
+   „vyříznutá“ – prosvítá jimi gradientové video pod štítkem.
+   Technika: černý text na bílém štítku + mix-blend-mode: screen
+   (bílá zůstane bílá, černá se stane průhlednou a ukáže pozadí). */
 .hero__word--accent {
-  background: var(--iv-accent-gradient);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent; -webkit-text-fill-color: transparent;
-  padding-bottom: 0.06em; /* aby se nespodní části písmen neořízly */
+  background: var(--iv-white); color: #000; border-radius: var(--radius-sm);
+  padding: 0.02em 0.2em 0.08em; margin-right: -0.05em;
+  mix-blend-mode: screen;
 }
+@media (min-width: 900px) { .hero__word--accent { border-radius: 8px; } }
+/* bez podpory prolnutí (a ve vysokém kontrastu) zůstane čitelný tmavě zelený text */
+@supports not (mix-blend-mode: screen) { .hero__word--accent { color: #0a6b3c; } }
+@media (forced-colors: active) { .hero__word--accent { mix-blend-mode: normal; color: CanvasText; background: Canvas; } }
 .accent {
   background: var(--iv-accent-gradient-dark);
   -webkit-background-clip: text; background-clip: text;
@@ -741,7 +751,7 @@ strong { font-weight: var(--fw-semibold); }
 }
 
 /* ---------- Úvodní video v hero ------------------------------------------- */
-/* Gradientové video (gradientwebHERO.mp4) po načtení hraje přes celou obrazovku,
+/* Gradientové video (GRADIENT_loop_10s.mp4) po načtení hraje přes celou obrazovku,
    pak se plynule „zmenší“ do odsazeného zaobleného bloku (clip-path), současně
    se objeví obsah hero i navigace. Dál se video přehrává jen při hoveru. */
 .hero__media {
