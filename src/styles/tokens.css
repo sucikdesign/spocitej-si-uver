@@ -91,9 +91,10 @@
   --iv-hero-poster: url("/assets/video/hero-first.webp");
   /* [ODVOZENO z videa] zelený přechod pro zvýraznění v hero */
   --iv-accent-gradient: linear-gradient(100deg, #d4ffe9 0%, #7dffc0 40%, #2fe89a 100%);
-  --iv-green: #119f5b; /* štítky s čísly kroků (dle ukázky ukazka001, místo červené) */
-  /* tmavší varianta pro zvýraznění v nadpisech na bílém pozadí (kontrast ≥ 3 : 1 = AA pro velký text) */
-  --iv-accent-gradient-dark: linear-gradient(100deg, #0a6b3c 0%, #0f8f52 55%, #12a05c 100%);
+  --iv-green: #00a76c; /* štítky s čísly kroků */
+  /* zvýraznění v nadpisech na bílém pozadí – barvy vzorkované z gradientového videa v hero
+     (tmavě zelená → smaragdová → tyrkysová); všechny body mají kontrast ≥ 3 : 1 = AA pro velký text */
+  --iv-accent-gradient-dark: linear-gradient(100deg, #134330 0%, #1f7a5a 50%, #14a37e 100%);
 
   /* ---------- Gradient Imperial Vision --------------------------------- */
   /* [MANUÁL 2.1] Originální gradient – rastr extrahovaný přímo z PDF
