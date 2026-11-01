@@ -138,7 +138,9 @@ strong { font-weight: var(--fw-semibold); }
 .header.is-solid { color: var(--iv-black); }
 .header.is-solid .header__bar {
   background: var(--iv-white);
-  box-shadow: 0 6px 24px -12px rgb(0 0 0 / 0.22); /* bez obrysu – od obsahu ho odděluje jen jemný stín */
+  border-color: transparent; border-width: 0;
+  /* bez obrysu – od obsahu ho odděluje jen jemný stín; bílý 1px lem zakryje okraj videa pod lištou */
+  box-shadow: 0 0 0 1px var(--iv-white), 0 6px 24px -12px rgb(0 0 0 / 0.22);
 }
 .header .logo--on-light { display: none; }
 .header.is-solid .logo--on-dark { display: none; }
