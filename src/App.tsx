@@ -49,20 +49,7 @@ export function App() {
           <Hero />
           <PartnerMarquee />
           <Explainer />
-          <section id="kalkulacka" className="calc-section" aria-labelledby="calc-title" tabIndex={-1}>
-            <div className="container">
-              <div className="section-head" data-reveal>
-                <h2 id="calc-title" className="h2">Zjistěte, kolik můžete refinancováním nebo konsolidací <span className="accent">ušetřit.</span></h2>
-                <p className="section-head__lead">
-                  Zadejte údaje o současném úvěru. Výsledek se přepočítá okamžitě. Předvyplněné hodnoty jsou pouze ilustrativní.
-                </p>
-              </div>
-              <Calculator
-                onSummaryChange={onSummaryChange}
-                onRequestContact={() => scrollToId("kontakt", "input")}
-              />
-            </div>
-          </section>
+          <CalcSection onSummaryChange={onSummaryChange} />
           <Reviews />
           <FinalCta summary={summary} />
         </main>
@@ -73,10 +60,27 @@ export function App() {
   );
 }
 
-function legalTitle(slug: string) {
+export function legalTitle(slug: string) {
   return (
     { "ochrana-osobnich-udaju": "Ochrana osobních údajů", cookies: "Zásady používání cookies", "pravni-informace": "Právní informace" }[
       slug
     ] ?? "Stránka nenalezena"
+  );
+}
+
+/** Sekce s kalkulačkou (sdílená webem i verzí pro GoHighLevel). */
+export function CalcSection({ onSummaryChange }: { onSummaryChange: (s: CalculationSummary | null) => void }) {
+  return (
+    <section id="kalkulacka" className="calc-section" aria-labelledby="calc-title" tabIndex={-1}>
+      <div className="iv-container">
+        <div className="section-head" data-reveal>
+          <h2 id="calc-title" className="h2">Zjistěte, kolik můžete refinancováním nebo konsolidací <span className="accent">ušetřit.</span></h2>
+          <p className="section-head__lead">
+            Zadejte údaje o současném úvěru. Výsledek se přepočítá okamžitě. Předvyplněné hodnoty jsou pouze ilustrativní.
+          </p>
+        </div>
+        <Calculator onSummaryChange={onSummaryChange} onRequestContact={() => scrollToId("kontakt", "input")} />
+      </div>
+    </section>
   );
 }

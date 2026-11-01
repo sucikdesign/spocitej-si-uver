@@ -12,9 +12,7 @@ npm run typecheck
 npm run build      # → dist/ (statický web, nasaditelný na libovolný hosting)
 ```
 
-Složka `dist/` se v repozitáři neverzuje – vznikne příkazem `npm run build`.
-
-**Náhled bez instalace:** `docs/index.html` je samostatný soubor (vše vložené uvnitř) – stačí ho otevřít v prohlížeči. Ze stejné složky lze zapnout i GitHub Pages (Settings → Pages → Branch `main`, složka `/docs`).
+Složka `dist/` je již sestavená – lze ji nahrát na hosting i bez instalace.
 
 ## Struktura
 
@@ -94,3 +92,39 @@ Profile API. Recenze neupravujte.
 | Kontrola textu „imperialvison.cz“ v manuálu (str. 20) – pravděpodobně překlep | – |
 
 Viditelné placeholdery jsou na webu označeny „[Doplnit: …]“, „Testovací data“ a „Partner 1…8“.
+
+## Verze pro GoHighLevel (spocitejsiuver.cz)
+
+Web běží i jako stránka v GoHighLevel: každá sekce je v GHL samostatná sekce s prvkem **Custom Code**, který obsahuje jen místo pro sekci. Skript a styly se načítají v *Header tracking code* stránky.
+
+```bash
+npm run build:ghl   # → ghl-dist/ (skript, CSS s prefixem .iv a použité soubory)
+```
+
+Obsah `ghl-dist/` se nahraje do `docs/ghl/` v repozitáři (hosting přes GitHub Pages: `https://sucikdesign.github.io/spocitej-si-uver/ghl/`).
+
+**Header tracking code stránky v GHL:**
+
+```html
+<link rel="stylesheet" href="https://sucikdesign.github.io/spocitej-si-uver/ghl/iv-ghl.css?v=1">
+<script>window.IV_CONFIG = { leadEndpoint: "URL_INBOUND_WEBHOOKU", leadFormat: "form" };</script>
+<script src="https://sucikdesign.github.io/spocitej-si-uver/ghl/iv-ghl.js?v=1" defer></script>
+```
+
+Po každé aktualizaci zvyšte `?v=` v obou odkazech.
+
+**Sekce (Custom Code v pořadí):**
+
+| Sekce | Kód |
+|---|---|
+| Hero | `<div data-iv="hero"></div>` |
+| Partneři | `<div data-iv="partneri"></div>` |
+| Jak to funguje | `<div data-iv="jak-to-funguje"></div>` |
+| Kalkulačka | `<div data-iv="kalkulacka"></div>` |
+| Recenze | `<div data-iv="recenze"></div>` |
+| Kontakt | `<div data-iv="kontakt"></div>` |
+| Patička | `<div data-iv="paticka"></div>` |
+
+Navigace, cookie lišta a právní stránky (překryvné okno) se vkládají automaticky. Sekce lze v GHL přesouvat, skrývat nebo odebrat.
+
+**Formulář → CRM:** workflow v GHL s triggerem *Inbound Webhook*. Formulář posílá `application/x-www-form-urlencoded` s poli `first_name`, `last_name`, `name`, `email`, `phone`, `message`, `preferred_contact`, `consent_personal_data`, `calculation` (výsledek kalkulace jako text), `source`, `submitted_at`, `page_url`.

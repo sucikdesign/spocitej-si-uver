@@ -38,8 +38,8 @@ strong { font-weight: var(--fw-semibold); }
 }
 .skip-link:focus { top: var(--space-3); }
 
-.container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
-.container--narrow { max-width: calc(var(--container-narrow) + 2 * var(--gutter)); }
+.iv-container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.iv-container--narrow { max-width: calc(var(--container-narrow) + 2 * var(--gutter)); }
 
 /* ---------- Typografie ---------------------------------------------------- */
 .h2 {
@@ -270,7 +270,7 @@ strong { font-weight: var(--fw-semibold); }
   position: absolute; pointer-events: none; z-index: 0;
   height: 150%; width: auto; max-width: none; top: -18%; right: -31%; /* posun doprava o ~17 % šířky sekce */
 }
-.explainer > .container { position: relative; z-index: 1; }
+.explainer > .iv-container { position: relative; z-index: 1; }
 .explainer__head { position: relative; }
 .steps { display: grid; gap: var(--space-4); counter-reset: s; }
 .steps__item {

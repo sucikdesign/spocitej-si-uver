@@ -47,7 +47,7 @@ export function FinalCta({ summary }: { summary: CalculationSummary | null }) {
   return (
     <section id="kontakt" className="final" aria-labelledby="final-title" tabIndex={-1}>
       <FinalVideo />
-      <div className="container">
+      <div className="iv-container">
         <div className="final__card" data-reveal>
           <div className="final__copy">
             <h2 id="final-title" className="h2 h2--inverse">Konzultace vás nic nestojí.</h2>
@@ -92,7 +92,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="footer">
-      <div className="container footer__grid">
+      <div className="iv-container footer__grid">
         <div className="footer__brand">
           <CoBrandLogo />
           <p className="footer__claim">Orientační kalkulačka refinancování úvěrů a hypoték.</p>
@@ -135,7 +135,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="container footer__operator">
+      <div className="iv-container footer__operator">
         <h2 className="footer__h">Provozovatel</h2>
         <p>
           {operator.companyName ?? <Missing label="obchodní firma" />}, IČO {operator.ico ?? <Missing label="IČO" />}
@@ -155,7 +155,7 @@ export function Footer() {
         </p>
       </div>
 
-      <div className="container footer__bottom">
+      <div className="iv-container footer__bottom">
         <span>© {year} Imperial Vision</span>
         <a href="#top">Zpět nahoru ↑</a>
       </div>
@@ -209,7 +209,7 @@ export function LegalPage({ slug }: { slug: string }) {
   const page = LEGAL_PAGES[slug];
   if (!page) {
     return (
-      <main id="main" className="legal container" tabIndex={-1}>
+      <main id="main" className="legal iv-container" tabIndex={-1}>
         <h1 className="h2">Stránka nenalezena</h1>
         <p><a className="link" href="#top">Zpět na úvod</a></p>
       </main>
@@ -217,7 +217,7 @@ export function LegalPage({ slug }: { slug: string }) {
   }
   return (
     <main id="main" className="legal" tabIndex={-1}>
-      <div className="container container--narrow">
+      <div className="iv-container iv-container--narrow">
         <a className="link" href="#top">← Zpět na kalkulačku</a>
         <h1 className="h2 legal__title">{page.title}</h1>
         <p className="placeholder-note" role="note">

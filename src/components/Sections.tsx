@@ -72,7 +72,7 @@ export function Header({ overlay }: { overlay: boolean }) {
   return (
     <header className={`header${inverted ? " is-solid" : " is-overlay"}${open ? " is-open" : ""}`}>
       <div className="header__bar">
-      <div className="container header__inner">
+      <div className="iv-container header__inner">
         <a className="header__brand" href="#top" aria-label="Spočítej si úvěr – Imperial Vision, na začátek stránky">
           <Logo variant="white" height={64} className="logo--on-dark" />
           <Logo variant="gradient" height={64} className="logo--on-light" decorative />
@@ -207,7 +207,7 @@ export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <HeroVideo />
-      <div className="container hero__inner">
+      <div className="iv-container hero__inner">
         <h1 id="hero-title" className="hero__title" aria-label="Spočítej si úvěr.">
           {["Spočítej", "si", "úvěr."].map((w, i) => (
             <span
@@ -304,7 +304,7 @@ export function Explainer() {
       <div className="explainer__watermark-wrap" aria-hidden="true">
         <SymbolMark variant="white" className="explainer__watermark" />
       </div>
-      <div className="container">
+      <div className="iv-container">
         <div className="section-head explainer__head" data-reveal>
           <h2 id="explainer-title" className="h2">Možná platíte <span className="accent">víc, než musíte.</span></h2>
           <p className="section-head__lead">
@@ -313,7 +313,7 @@ export function Explainer() {
           </p>
         </div>
       </div>
-      <ol className="container steps">
+      <ol className="iv-container steps">
         {STEPS.map((s, i) => (
           <li key={s.n} className="steps__item parallax--desktop" data-reveal data-reveal-delay={String(i)} data-parallax={String(0.03 + i * 0.05)}>
             <span className="steps__n" aria-hidden="true">{s.n}</span>
@@ -322,7 +322,7 @@ export function Explainer() {
           </li>
         ))}
       </ol>
-      <div className="container explainer__bridge" data-reveal>
+      <div className="iv-container explainer__bridge" data-reveal>
         <a
           className="btn btn--primary"
           href="#kalkulacka"
@@ -353,7 +353,7 @@ export function Reviews() {
 
   return (
     <section id="recenze" className="reviews" aria-labelledby="reviews-title">
-      <div className="container">
+      <div className="iv-container">
         <div className="reviews__head" data-reveal>
           <div>
             <p className="eyebrow">Google recenze</p>

@@ -453,11 +453,11 @@ function buildSummary(input: ConsolidationInput, r: ConsolidationResult): Calcul
   const out: CalculationSummary = {};
   const many = r.loans.length > 1;
   r.loans.forEach((l, i) => {
-    const p = many ? `Úvěr ${i + 1} – ` : "";
-    out[`${p}zůstatek`] = formatCZK(l.balance);
-    out[`${p}sazba`] = formatPercent(l.rate);
-    out[`${p}splátka`] = `${formatCZK(l.payment)}${l.paymentSource === "calculated" ? " (dopočtená)" : ""}`;
-    out[`${p}zbývající doba`] = formatMonths(input.loans[i].months ?? l.months);
+    const k = (label: string) => (many ? `Úvěr ${i + 1} – ${label}` : label.charAt(0).toUpperCase() + label.slice(1));
+    out[k("zůstatek")] = formatCZK(l.balance);
+    out[k("sazba")] = formatPercent(l.rate);
+    out[k("splátka")] = `${formatCZK(l.payment)}${l.paymentSource === "calculated" ? " (dopočtená)" : ""}`;
+    out[k("zbývající doba")] = formatMonths(input.loans[i].months ?? l.months);
   });
   out["Sazba při refinancování / konsolidaci"] = formatPercent(input.newRate ?? 0);
   out["Nová splatnost"] = formatMonths(r.newMonths);

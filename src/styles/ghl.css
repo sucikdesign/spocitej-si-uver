@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Doplňky pouze pro verzi v GoHighLevel (načítají se BEZ prefixu .iv)
+   ========================================================================== */
+
+/* bloky GHL kolem našich sekcí: bez vlastních okrajů a omezení šířky */
+.iv-ghl-wrap {
+  padding: 0 !important;
+  margin-top: 0 !important; margin-bottom: 0 !important;
+  max-width: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+.iv-mount { display: block; width: 100%; }
+html { scroll-padding-top: 110px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* během úvodního videa se nescrolluje */
+html.intro-playing, html.intro-playing body { overflow: hidden; }
+html.iv-legal-open, html.iv-legal-open body { overflow: hidden; }
+
+/* právní stránky jako překryvné okno */
+.iv .legal-overlay {
+  position: fixed; inset: 0; z-index: 120; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: var(--color-bg); color: var(--color-text);
+}
+.iv .legal-overlay:focus { outline: none; }
+.iv .legal-overlay .legal { padding-top: var(--space-9, 96px); }
+.iv .legal-overlay__close {
+  position: fixed; top: 20px; right: 20px; z-index: 1; color: var(--color-text-strong);
+  background: var(--iv-white);
+}

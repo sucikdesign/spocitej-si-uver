@@ -1,5 +1,5 @@
 import { useId, useRef, useState, type FormEvent } from "react";
-import { EMAIL_RE, PHONE_RE, sanitize, submitLead, type SubmitResult } from "../lib/contact";
+import { EMAIL_RE, PHONE_RE, leadEndpoint, sanitize, submitLead, type SubmitResult } from "../lib/contact";
 import { SITE } from "../config/site";
 import type { CalculationSummary } from "./Calculator";
 import { Arrow } from "./Calculator";
@@ -24,7 +24,7 @@ export function ContactForm({ summary }: Props) {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
   const statusRef = useRef<HTMLDivElement>(null);
-  const integrated = Boolean(SITE.integrations.leadEndpoint);
+  const integrated = Boolean(leadEndpoint());
 
   function validate(): Errors {
     const e: Errors = {};

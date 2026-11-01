@@ -8,7 +8,8 @@
     "dev": "node build.mjs --dev",
     "build": "node build.mjs",
     "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:ghl": "node build.mjs --ghl"
   },
   "dependencies": {
     "react": "^19.2.0",
