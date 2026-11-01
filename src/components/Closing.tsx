@@ -5,6 +5,7 @@ import { ContactForm } from "./ContactForm";
 import type { CalculationSummary } from "./Calculator";
 import { SITE } from "../config/site";
 import { openCookieSettings } from "../lib/consent";
+import { CALCULATOR_NOTICE, LEGAL_PAGES, LegalInfoStatement, Missing, TiedAgentStatement } from "./Legal";
 
 /* ------------------------------------------------------------------------ */
 /* Závěrečné CTA + kontaktní formulář                                       */
@@ -73,14 +74,6 @@ export function FinalCta({ summary }: { summary: CalculationSummary | null }) {
 /* Patička                                                                  */
 /* ------------------------------------------------------------------------ */
 
-function Missing({ label }: { label: string }) {
-  return (
-    <span className="missing" title="Chybějící podklad – doplnit před spuštěním">
-      [Doplnit: {label}]
-    </span>
-  );
-}
-
 export const LEGAL_LINKS = [
   { href: "#/ochrana-osobnich-udaju", label: "Ochrana osobních údajů" },
   { href: "#/cookies", label: "Zásady používání cookies" },
@@ -142,17 +135,9 @@ export function Footer() {
           {operator.dic && <>, DIČ {operator.dic}</>}, se sídlem {operator.registeredOffice ?? <Missing label="sídlo" />}.{" "}
           {operator.commercialRegister ?? <Missing label="zápis v obchodním rejstříku" />}.
         </p>
-        <p>
-          {operator.regulatoryStatus ?? <Missing label="regulační postavení a registrace v ČNB (zák. č. 257/2016 Sb.)" />}
-          {operator.cnbRegistryUrl && (
-            <> · <a href={operator.cnbRegistryUrl} target="_blank" rel="noopener noreferrer">Ověřit v registru ČNB</a></>
-          )}
-          {operator.representedBy && <> · {operator.representedBy}</>}
-        </p>
-        <p>{operator.disputeResolution ?? <Missing label="mimosoudní řešení sporů / orgán dohledu" />}</p>
-        <p className="footer__fine">
-          Výsledky kalkulačky jsou orientační a nepředstavují nabídku ani doporučení konkrétního úvěrového produktu.
-        </p>
+        <p><TiedAgentStatement /></p>
+        <p><LegalInfoStatement /></p>
+        <p className="footer__fine">{CALCULATOR_NOTICE}</p>
       </div>
 
       <div className="iv-container footer__bottom">
@@ -164,46 +149,8 @@ export function Footer() {
 }
 
 /* ------------------------------------------------------------------------ */
-/* Právní stránky (obsah dodá Imperial Vision / právník)                    */
+/* Právní stránky (obsah v Legal.tsx)                                       */
 /* ------------------------------------------------------------------------ */
-
-const LEGAL_PAGES: Record<string, { title: string; intro: string; outline: string[] }> = {
-  "ochrana-osobnich-udaju": {
-    title: "Ochrana osobních údajů",
-    intro: "Text zásad zpracování osobních údajů dodá Imperial Vision. Níže je pouze osnova požadovaného obsahu dle GDPR.",
-    outline: [
-      "Správce osobních údajů a jeho kontaktní údaje (případně pověřenec)",
-      "Rozsah zpracovávaných údajů z kontaktního formuláře a kalkulačky",
-      "Účely a právní základy zpracování",
-      "Doba uložení",
-      "Příjemci a zpracovatelé (hosting, CRM, e-mailing)",
-      "Předávání do třetích zemí",
-      "Práva subjektu údajů a právo podat stížnost u ÚOOÚ",
-    ],
-  },
-  cookies: {
-    title: "Zásady používání cookies",
-    intro: "Text zásad cookies dodá Imperial Vision. Seznam cookies doplňte podle skutečně nasazených nástrojů.",
-    outline: [
-      "Nezbytné: iv_cookie_consent (localStorage) – uložení volby souhlasu, 12 měsíců / do změny",
-      "Analytické: zatím nejsou nasazeny – doplnit při nasazení (název, poskytovatel, účel, doba)",
-      "Marketingové: zatím nejsou nasazeny – doplnit při nasazení",
-      "Jak souhlas změnit nebo odvolat",
-    ],
-  },
-  "pravni-informace": {
-    title: "Právní informace",
-    intro: "Identifikační a regulační údaje provozovatele dodá Imperial Vision.",
-    outline: [
-      "Obchodní firma, IČO, DIČ, sídlo, zápis v obchodním rejstříku",
-      "Postavení zprostředkovatele a číslo registrace v ČNB (zák. č. 257/2016 Sb.)",
-      "Zastoupený samostatný zprostředkovatel (je-li relevantní)",
-      "Orgán dohledu a mimosoudní řešení sporů (finanční arbitr)",
-      "Informace o odměně zprostředkovatele",
-      "Upozornění k orientační povaze výpočtů",
-    ],
-  },
-};
 
 export function LegalPage({ slug }: { slug: string }) {
   const page = LEGAL_PAGES[slug];
@@ -215,23 +162,13 @@ export function LegalPage({ slug }: { slug: string }) {
       </main>
     );
   }
+  const Body = page.body;
   return (
     <main id="main" className="legal" tabIndex={-1}>
       <div className="iv-container iv-container--narrow">
         <a className="link" href="#top">← Zpět na kalkulačku</a>
         <h1 className="h2 legal__title">{page.title}</h1>
-        <p className="placeholder-note" role="note">
-          Dočasná stránka – finální právní text zatím nebyl dodán. Tento obsah není platným právním dokumentem.
-        </p>
-        <p>{page.intro}</p>
-        <ul className="legal__outline">
-          {page.outline.map((o) => <li key={o}>{o}</li>)}
-        </ul>
-        {slug === "cookies" && (
-          <button type="button" className="btn btn--primary" onClick={openCookieSettings}>
-            Otevřít nastavení cookies
-          </button>
-        )}
+        <Body />
       </div>
     </main>
   );

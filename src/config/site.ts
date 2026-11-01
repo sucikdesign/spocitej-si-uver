@@ -32,6 +32,20 @@ export interface SiteConfig {
     representedBy: string | null;
     /** Orgán dohledu / mimosoudní řešení sporů (např. finanční arbitr). */
     disputeResolution: string | null;
+    /** Finanční poradci, kteří na tomto webu nabízejí služby (celé jméno a příjmení). */
+    advisors: string[];
+    /** Finanční oblasti, ve kterých zde služby nabízíme (pro sdělení o vázaném zástupci). */
+    financialAreas: string[];
+  };
+  /** Zastoupený samostatný zprostředkovatel a správce osobních údajů (dle manuálu SAB servis). */
+  principal: {
+    name: string;
+    ico: string;
+    address: string;
+    commercialRegister: string;
+    legalInfoUrl: string;
+    gdprUrl: string;
+    dpo: string;
   };
   integrations: {
     /**
@@ -65,6 +79,20 @@ export const SITE: SiteConfig = {
     cnbRegistryUrl: null,
     representedBy: null,
     disputeResolution: null,
+    // TODO: doplnit seznam poradců (manuál SAB servis, kap. 1 – „Spolupracující poradci“)
+    advisors: [],
+    financialAreas: ["spotřebitelské úvěry dle zákona č. 257/2016 Sb."],
+  },
+  // Údaje převzaty z manuálu SAB servis („Manuál pro poradce k webovým stránkám“, 2022)
+  // a z https://imperialvision.cz/gdpr/ (1. 11. 2026)
+  principal: {
+    name: "SAB servis s.r.o.",
+    ico: "24704008",
+    address: "Jungmannova 748/30, 110 00 Praha 1 – Nové Město",
+    commercialRegister: "zapsaná v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 167427",
+    legalInfoUrl: "https://sabservis.cz/informace",
+    gdprUrl: "https://sabservis.cz/gdpr",
+    dpo: "Miroslav Švenda, Jánský vršek 323/13, 118 00 Praha 1 – Malá Strana, e-mail: svenda@sabservis.cz, tel.: +420 257 223 191",
   },
   integrations: {
     leadEndpoint: null,

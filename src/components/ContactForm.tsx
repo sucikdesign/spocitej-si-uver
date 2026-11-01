@@ -215,8 +215,8 @@ export function ContactForm({ summary }: Props) {
             onChange={(e) => setConsent(e.target.checked)}
           />
           <span>
-            Souhlasím se zpracováním osobních údajů za účelem vyřízení poptávky. Více v{" "}
-            <a href="#/ochrana-osobnich-udaju">zásadách ochrany osobních údajů</a>.
+            Souhlasím se zpracováním svých osobních údajů společností SAB servis, s.r.o. (správce) za účelem vyřízení
+            poptávky. Více v <a href="#/ochrana-osobnich-udaju">informacích o ochraně osobních údajů</a>.
           </span>
         </label>
         {errors.consent && <p id={f("consent-err")} className="field__error">{errors.consent}</p>}

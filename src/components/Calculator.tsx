@@ -10,6 +10,7 @@ import {
 } from "../lib/loanMath";
 import { formatCZK, formatPercent, parseNumber } from "../lib/format";
 import { prefersReducedMotion, tweenNumber } from "../lib/motion";
+import { CALCULATOR_NOTICE } from "./Legal";
 
 export type CalculationSummary = Record<string, string>;
 
@@ -348,7 +349,7 @@ function Results({ result, many }: { result: ConsolidationResult | null; many: b
         )}
 
         <p className="results__disclaimer">
-          Výpočet je orientační a neslouží jako nabídka úvěru. Zadaná sazba není nabídkou konkrétní banky.
+          {CALCULATOR_NOTICE} Výpočet neslouží jako nabídka úvěru. Zadaná sazba není nabídkou konkrétní banky.
           Předpokládá neměnnou sazbu po celou dobu splácení a nezahrnuje poplatky spojené s refinancováním, pojištění
           ani vedení účtu. Částky jsou nominální, bez vlivu inflace.
         </p>
