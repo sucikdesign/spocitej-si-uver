@@ -247,7 +247,7 @@ strong { font-weight: var(--fw-semibold); }
 .marquee:active .marquee__track { animation-play-state: paused; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 .marquee__item { flex: none; height: 48px; display: flex; align-items: center; }
-.marquee__item img { width: auto; max-height: 43px; object-fit: contain; opacity: 0.78; transition: opacity var(--dur) var(--ease); }
+.marquee__item img { width: auto; max-height: 43px; object-fit: contain; opacity: 1; transition: opacity var(--dur) var(--ease); }
 .marquee__item:hover img { opacity: 1; }
 
 .logo-placeholder {
